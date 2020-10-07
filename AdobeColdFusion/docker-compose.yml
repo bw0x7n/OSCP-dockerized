@@ -1,0 +1,5 @@
+coldfusion:
+  container_name: coldfusion
+  image: oscplabs/coldfusion
+  ports:
+  - 8500:8500
