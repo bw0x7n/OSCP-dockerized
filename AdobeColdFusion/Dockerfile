@@ -1,15 +1,27 @@
-FROM ubuntu:12.04
-
+FROM phusion/baseimage:0.9.9
 MAINTAINER AmineLaamiri <blackwarriorxtn@gmail.com>
+EXPOSE 80 8500
+VOLUME ["/var/www", "/tmp/config"]
 
-USER root
-RUN apt-get update && apt-get install wget libstdc++5 -y
+ENV DEBIAN_FRONTEND noninteractive
+ENV REFRESHED_AT 2015_02_23_1
 
-ADD installer.properties /opt/installer.properties
-ENV COLD_FUSION_URL = http://trials.adobe.com/Applications/ColdFusion/801WWE/coldfusion-801-lin64.bin;
-RUN wget -O /opt/coldfusion-801-lin64.bin -q --no-check-certificate $COLD_FUSION_URL && chmod +x /opt/coldfusion-801-lin64.bin && /opt/./coldfusion-801-lin64.bin -i silent -f /opt/installer.properties
+RUN apt-get update
+RUN apt-get install -y wget unzip xsltproc apache2 default-jre && apt-get clean
 
-EXPOSE 8500
+ADD ./build/install/ /tmp/
 
-ADD startup.sh /opt/startup.sh
-CMD ["sh", "/opt/startup.sh"]
+RUN chmod 755 /tmp/ColdFusion_8_WWEJ_linux64.bin
+RUN chmod 755 /tmp/install-cf8.sh
+RUN sudo /tmp/install-cf8.sh
+
+# Replace the default startup script with a slightly modified one which logs to console
+RUN mv /tmp/coldfusion /opt/coldfusion8/bin/coldfusion
+
+ADD ./build/service/ /etc/service/
+RUN chmod -R 755 /etc/service/coldfusion8
+
+ADD ./build/my_init.d/ /etc/my_init.d/
+
+RUN rm /tmp/*.bin
+RUN rm /tmp/*.sh
