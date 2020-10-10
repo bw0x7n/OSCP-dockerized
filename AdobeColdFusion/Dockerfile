@@ -1,6 +1,6 @@
 FROM phusion/baseimage:0.9.9
 MAINTAINER AmineLaamiri <blackwarriorxtn@gmail.com>
-EXPOSE 80 8500
+EXPOSE 8500 8500
 VOLUME ["/var/www", "/tmp/config"]
 
 ENV DEBIAN_FRONTEND noninteractive
