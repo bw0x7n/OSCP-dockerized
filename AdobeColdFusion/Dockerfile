@@ -11,7 +11,7 @@ RUN apt-get install -y wget unzip xsltproc apache2 default-jre && apt-get clean
 
 ADD ./build/install/ /tmp/
 
-RUN chmod 755 /tmp/ColdFusion_8_WWEJ_linux64.bin
+RUN chmod 755 /tmp/coldfusion-801-lin64.bin
 RUN chmod 755 /tmp/install-cf8.sh
 RUN sudo /tmp/install-cf8.sh
 
