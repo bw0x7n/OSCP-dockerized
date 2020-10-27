@@ -1,0 +1,2 @@
+AdobeColdFusion/build/install/coldfusion-801-lin64.bin filter=lfs diff=lfs merge=lfs -text
+ubuntu_sendpage_exploit_kernel2.4/ubuntu8.ova filter=lfs diff=lfs merge=lfs -text
